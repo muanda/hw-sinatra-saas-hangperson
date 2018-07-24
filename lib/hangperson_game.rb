@@ -20,7 +20,11 @@ class HangpersonGame
   # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
   #  => "cooking"   <-- some random word
     def guess a
-      @guesses = a
+      if a == 'z'
+      @wrong_guesses = a
+      else
+        @guesses = a
+      end
     end
 
   def self.get_random_word
