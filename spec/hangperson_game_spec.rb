@@ -10,7 +10,7 @@ describe HangpersonGame do
   end
 
   describe 'new', :pending => true do
-    it "takes a parameter and returns a HangpersonGame object" do      
+    it "takes a parameter and returns a HangpersonGame object" do
       @hangpersonGame = HangpersonGame.new('glorp')
       expect(@hangpersonGame).to be_an_instance_of(HangpersonGame)
       expect(@hangpersonGame.word).to eq('glorp')
