@@ -12,7 +12,7 @@ class HangpersonGame
     @word = word
     @guesses = ''
     @wrong_guesses = ''
-    @pickword = word
+    @pickword = word.dup
     @arr =[]
     @str = ""
   end
@@ -29,28 +29,29 @@ class HangpersonGame
     if /#{a}/ =~ @word
       @guesses = a
       @str = @arr.push(a).join
+
     else
       @wrong_guesses = a
       @str = @arr.push(a).join
     end
+
   end
 
   def word_with_guesses
-     index = 0
-      while  index < @word.length
-        if !(@word[index].match(/[#{@str}]/))
-          @word.sub!(@word[index],"-")
-        end
-         index +=1
+    index = 0
+    while  index < @word.length
+      if !(@word[index].match(/[#{@str}]/))
+        @word.sub!(@word[index],"-")
       end
+      index +=1
+    end
     @word
   end
 
   def check_win_or_lose
-    return :win if @word == @pickword
-
-
-
+    return :lose if @str.length >= 7 
+    return :win  if word_with_guesses == @pickword
+    :play
   end
 
 
