@@ -8,24 +8,45 @@ class HangpersonGame
   # def initialize()
   # end
 
-
   def initialize(word)
     @word = word
     @guesses = ''
     @wrong_guesses = ''
+    @check_win_or_lose =''
+    @arr =[]
+    @str = ""
   end
-  attr_accessor :word, :guesses, :wrong_guesses
+  attr_accessor :word, :guesses, :wrong_guesses, :word_with_guesses
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
   # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
   #  => "cooking"   <-- some random word
-    def guess a
-      if a == 'z'
+  def guess a
+    index = 0
+    raise ArgumentError if a.nil? or a.match(/\W/) or a.empty?
+    return false if !(a.match(/[a-z]/))
+
+    if /#{a}/ =~ @word
+      @guesses = a
+      @str = @arr.push(a).join
+    else
       @wrong_guesses = a
-      else
-        @guesses = a
-      end
+      @str = @arr.push(a).join
     end
+  end
+
+  def word_with_guesses
+     index = 0
+      while  index < @word.length
+        if !(@word[index].match(/[#{@str}]/))
+          @word.sub!(@word[index],"-")
+        end
+         index +=1
+      end
+    @word
+  end
+
+
 
   def self.get_random_word
     require 'uri'
