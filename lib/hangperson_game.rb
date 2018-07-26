@@ -12,7 +12,7 @@ class HangpersonGame
     @word = word
     @guesses = ''
     @wrong_guesses = ''
-    @check_win_or_lose =''
+    @pickword = word
     @arr =[]
     @str = ""
   end
@@ -46,6 +46,12 @@ class HangpersonGame
     @word
   end
 
+  def check_win_or_lose
+    return :win if @word == @pickword
+
+
+
+  end
 
 
   def self.get_random_word
