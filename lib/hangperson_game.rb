@@ -9,39 +9,39 @@ class HangpersonGame
   # end
 
   def initialize(word)
+    #initialize instance variables
     @word = word
     @guesses = ''
     @wrong_guesses = ''
-    @pickword = word.dup
+    @word_save = word.dup
     @arr =[]
-    @str = ""
+    @str = ''
   end
+  # create getters and setters
   attr_accessor :word, :guesses, :wrong_guesses, :word_with_guesses
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
   # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
   #  => "cooking"   <-- some random word
+
   def guess a
-    index = 0
-    raise ArgumentError if a.nil? or a.match(/\W/) or a.empty?
-    return false if !(a.match(/[a-z]/))
+    raise ArgumentError if invalid_guess? a
+    return false if !(a.match(/[a-z]/)) || @str.match(a)
 
-    if /#{a}/ =~ @word
+    if /#{a}/ =~ @word #test the input a if match the word
       @guesses = a
-      @str = @arr.push(a).join
-
     else
       @wrong_guesses = a
-      @str = @arr.push(a).join
     end
 
+    @str = @arr.push(a).join
   end
 
   def word_with_guesses
     index = 0
     while  index < @word.length
-      if !(@word[index].match(/[#{@str}]/))
-        @word.sub!(@word[index],"-")
+      unless (@word[index].match(/[#{@str}]/))  # test each char in word if does notmatch the str
+        @word.sub!(@word[index],"-") # sub with "-" if does not match
       end
       index +=1
     end
@@ -49,9 +49,13 @@ class HangpersonGame
   end
 
   def check_win_or_lose
-    return :lose if @str.length >= 7 
-    return :win  if word_with_guesses == @pickword
+    return :lose if @str.length >= 7
+    return :win  if word_with_guesses == @word_save
     :play
+  end
+
+  def invalid_guess?(a)
+    a.nil? || a.match(/\W/) || a.empty?
   end
 
 
