@@ -35,17 +35,11 @@ class HangpersonGame
     end
 
     @str = @arr.push(a).join
+
   end
 
   def word_with_guesses
-    index = 0
-    while  index < @word.length
-      unless (@word[index].match(/[#{@str}]/))  # test each char in word if does notmatch the str
-        @word.sub!(@word[index],"-") # sub with "-" if does not match
-      end
-      index +=1
-    end
-    @word
+      @word.gsub(/[^ #{@str}]/,'-')
   end
 
   def check_win_or_lose
@@ -69,3 +63,4 @@ class HangpersonGame
   end
 
 end
+
