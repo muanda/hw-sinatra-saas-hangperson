@@ -41,13 +41,25 @@ class HangpersonApp < Sinatra::Base
   post '/guess' do
     letter = params[:guess].to_s[0]
     ### YOUR CODE HERE ###
-      @game.guess(letter)
-      if @game.guess(letter) == false
-        flash[:message] = "You have already used that letter."
-      end
+    @game.guess(letter)
+    if @game.guess(letter) == false
+      flash[:message] = "You have already used that letter."
+    end
+
+    if @game.wrong_guesses.length >= 1
+      flash[:message] = "Invalid guess."
+    end
+
+    if @game.check_win_or_lose == :win
+      redirect '/win'
+    end
+
+    if @game.check_win_or_lose == :lose
+      redirect '/lose'
+    end
     redirect '/show'
   end
-  
+
   # Everytime a guess is made, we should eventually end up at this route.
   # Use existing methods in HangpersonGame to check if player has
   # won, lost, or neither, and take the appropriate action.
